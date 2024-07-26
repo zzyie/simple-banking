@@ -1,0 +1,9 @@
+first_name: John
+middle_name: 
+last_name: Doe
+user_id: 35651669
+
+Account number: D902397758
+Open date: 2024-07-25
+Balance: 0.00
+APR: 0.00100

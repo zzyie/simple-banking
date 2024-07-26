@@ -1,0 +1,15 @@
+first_name: Mary
+middle_name: 
+last_name: Jane
+user_id: 94028793
+
+Account number: D462812976
+Open date: 2024-07-25
+Balance: 0.00
+APR: 0.00100
+
+Account number: S941593202
+Open date: 2024-07-25
+Balance: 0.00
+APR: 0.04500
+Withdrawals per year: 0 / 20
