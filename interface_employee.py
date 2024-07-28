@@ -152,28 +152,33 @@ def main():
 
                             show_accounts(session)
 
-                        if account_action == 2:
+                        elif account_action == 2:
 
                             pay_interest(session, emp, Employee)
 
-                        if account_action == 3:
+                        elif account_action == 3:
 
                             update_withdrawal_count(session, emp, Employee)
+
+                        elif account_action == 0: 
+
+                            pass
 
                         else: 
 
                             print("Sorry, that isn't one of the choices, please try again.")
                 
-                if choice == 2: 
+                elif choice == 2: 
+
+                    pass
+
+                elif choice == 0: 
 
                     pass
 
                 else: 
 
                     print("Sorry, that isn't one of the choices, please try again.")
-
-
-
 
 
             # TODO: view all services

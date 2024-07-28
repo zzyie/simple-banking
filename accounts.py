@@ -146,8 +146,8 @@ class Checking(Account):
         
         new_acct = cls.upsert(session, account_num=acct_num, cust_id=cust_id)
 
-        print(new_acct.account_num)
-        print(new_acct.cust_id)
+        # print(new_acct.account_num)
+        # print(new_acct.cust_id)
 
         return new_acct   
 

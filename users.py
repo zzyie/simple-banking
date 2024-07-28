@@ -153,6 +153,8 @@ class Customer(User):
 
     checking = relationship('Checking', back_populates='customer', cascade='all, delete, delete-orphan')
     saving = relationship('Saving', back_populates='customer', cascade='all, delete, delete-orphan')
+    loan = relationship('Loan', back_populates='customer', cascade='all, delete, delete-orphan')
+    creditcard = relationship('CreditCard', back_populates='customer', cascade='all, delete, delete-orphan')
         
     # class methods
 
