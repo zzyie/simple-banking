@@ -10,7 +10,7 @@ role = input("Please enter 1 if you are an employee, and 2 if you are a customer
 
 create_tables()
 
-if role == '1': 
+if role == '1':  
 
     EMP.main()
 

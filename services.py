@@ -11,7 +11,6 @@ class Service:
 
     def __init__(self, acct_num, cust_id, balance, int_rate): 
 
-        # TODO: value checks
         # TODO: change unncecessary exceptions to print error message and return
         # do not support delinquency
         # quote interest rate in decimals
@@ -249,7 +248,7 @@ class CreditCard(Service):
         return acct_num
 
     @classmethod
-    def upsert(cls, session, acct_num, cust_id, balance, int_rate, prev_bal=None, curr_bal=None, int_bal=None, update = False): 
+    def upsert(cls, session, acct_num, cust_id, balance, int_rate, prev_bal = None, curr_bal = None, int_bal = None, update = False): 
         
         instance = session.query(cls).filter_by(acct_num=acct_num).first()
 
@@ -316,7 +315,7 @@ class CreditCard(Service):
 
     # open loan
     @classmethod
-    def new_card(cls, session, cust_id, balance, int_rate): 
+    def new_card(cls, session, cust_id, balance = 1000.00, int_rate = 0.3): 
 
         acct_num = cls.generate_card_num()
 
@@ -331,21 +330,35 @@ class CreditCard(Service):
 
         return new_card
     
-    def withdraw(self, session, amt): 
+    # TODO: write another script to call credit card withdrawals
+    @classmethod
+    def withdraw(cls, session, acct_num, amt): 
 
         if amt <= 0: 
 
-            raise ValueError("Negative withdrawal not allowed")     
+            raise ValueError("Negative withdrawal not allowed.")    
+        
+        result = CreditCard.search(session, acct_num = acct_num)
 
-        if self.balance - amt < 0: 
+        if len(result) != 1: 
+
+            raise Exception("Credit Card number error.")
+
+        else: 
+
+            svc = result[0]
+
+        if svc.balance - amt < 0: 
 
             raise ValueError("Insufficient funds")
 
-        self.balance -= amt 
+        svc.balance -= amt 
         
-        self.curr_bal += amt
+        svc.curr_bal += amt
 
-        CreditCard.upsert(session, self.acct_num, self.cust_id, self.balance, self.int_rate, self.prev_bal, self.curr_bal, self.int_bal, update=True)
+        CreditCard.upsert(session, svc.acct_num, svc.cust_id, svc.balance, svc.int_rate, svc.prev_bal, svc.curr_bal, svc.int_bal, update=True)
+
+        print("Withdrawal success.")
         
         # idx = ((date.today() - self.orig_date) // self.bill_period) % 12
     
@@ -377,7 +390,7 @@ class CreditCard(Service):
 
     def view_month_end_bal(self): 
 
-        return self.curr_bal
+        return self.prev_bal
 
     def pay_balance(self, session, amt): 
 
@@ -491,6 +504,19 @@ class CreditCard(Service):
         
         # if 
 
+def view_services(session, cust_id=None, creditCard=False): 
+    
+    # return a nested list of loans followed by credit card
+
+    services= []
+
+    if not creditCard:
+
+        services += Loan.search(session, cust_id = cust_id)
+
+    services += CreditCard.search(session, cust_id = cust_id)
+
+    return services
 
 
 
